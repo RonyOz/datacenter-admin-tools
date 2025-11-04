@@ -1,0 +1,18 @@
+# Archivos de backup
+*.bak
+*.backup
+*.old
+
+# Archivos de log
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Catálogos de backup generados
+catalogo_*.txt
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
