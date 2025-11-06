@@ -5,7 +5,7 @@ Este proyecto implementa herramientas para facilitar las labores del administrad
 
 ## Funcionalidades Implementadas
 
-### 1. Usuarios y Último Login ✅
+### 1. Usuarios y Último Login 
 **Archivo:** `modules\usuarios.ps1`  
 **Función:** `Listar-Usuarios`
 
@@ -20,7 +20,7 @@ Este proyecto implementa herramientas para facilitar las labores del administrad
 
 ---
 
-### 2. Filesystems y Espacio Disponible ✅
+### 2. Filesystems y Espacio Disponible 
 **Archivo:** `modules\discos.ps1`  
 **Función:** `Listar-Discos`
 
@@ -37,7 +37,7 @@ Este proyecto implementa herramientas para facilitar las labores del administrad
 
 ---
 
-### 3. Archivos Más Grandes ✅
+### 3. Archivos Más Grandes 
 **Archivo:** `modules\archivos_grandes.ps1`  
 **Función:** `Buscar-ArchivosGrandes`
 
@@ -57,7 +57,7 @@ Este proyecto implementa herramientas para facilitar las labores del administrad
 
 ---
 
-### 4. Información de Memoria y Swap ✅
+### 4. Información de Memoria y Swap 
 **Archivo:** `modules\memoria.ps1`  
 **Función:** `Mostrar-Memoria`
 
@@ -115,23 +115,23 @@ cd "ruta\al\proyecto\powershell"
 
 ## Resultados de Pruebas
 
-### ✅ Opción 1 - Usuarios
+### Opción 1 - Usuarios
 - Lista correctamente todos los usuarios locales
 - Muestra fecha de último login en formato legible
 - Identifica usuarios activos y deshabilitados
 
-### ✅ Opción 2 - Discos
+### Opción 2 - Discos
 - Detecta todas las unidades de disco
 - Calcula correctamente el espacio en bytes
 - Muestra porcentaje de uso con colores según nivel
 
-### ✅ Opción 3 - Archivos Grandes
+### Opción 3 - Archivos Grandes
 - Búsqueda recursiva funcional
 - Ordena correctamente por tamaño
 - Muestra ruta completa de los archivos
 - Maneja errores de permisos adecuadamente
 
-### ✅ Opción 4 - Memoria y Swap
+### Opción 4 - Memoria y Swap
 - Obtiene correctamente información de memoria RAM
 - Detecta y reporta archivo de paginación
 - Cálculos precisos de bytes y porcentajes
