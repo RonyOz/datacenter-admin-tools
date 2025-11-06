@@ -3,22 +3,22 @@
 
 function Buscar-ArchivosGrandes {
     Clear-Host
-    Write-Host "==========================================" -ForegroundColor Cyan
-    Write-Host "  ARCHIVOS MÁS GRANDES" -ForegroundColor Cyan
-    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "=========================================="
+    Write-Host "  ARCHIVOS MÁS GRANDES"
+    Write-Host "=========================================="
     Write-Host ""
     
     # Obtener unidades disponibles
     $unidades = Get-PSDrive -PSProvider FileSystem | Where-Object { $null -ne $_.Used }
     
     if ($unidades.Count -eq 0) {
-        Write-Host "No se encontraron unidades disponibles." -ForegroundColor Red
+        Write-Host "No se encontraron unidades disponibles."
         Write-Host ""
         return
     }
     
     # Mostrar menú de unidades
-    Write-Host "Unidades disponibles:" -ForegroundColor Yellow
+    Write-Host "Unidades disponibles:"
     Write-Host ""
     
     $index = 1
@@ -39,14 +39,14 @@ function Buscar-ArchivosGrandes {
     # Validar selección
     if ([string]::IsNullOrWhiteSpace($seleccion)) {
         Write-Host ""
-        Write-Host "Error: Debe seleccionar una opción." -ForegroundColor Red
+        Write-Host "Error: Debe seleccionar una opción."
         Write-Host ""
         return
     }
     
     if (-not $menuUnidades.ContainsKey($seleccion)) {
         Write-Host ""
-        Write-Host "Error: Selección inválida. Debe ingresar un número entre 1 y $($unidades.Count)." -ForegroundColor Red
+        Write-Host "Error: Selección inválida. Debe ingresar un número entre 1 y $($unidades.Count)."
         Write-Host ""
         return
     }
@@ -54,8 +54,8 @@ function Buscar-ArchivosGrandes {
     $filesystem = $menuUnidades[$seleccion]
     
     Write-Host ""
-    Write-Host "Analizando unidad: $filesystem" -ForegroundColor Green
-    Write-Host "Esto puede tomar varios minutos dependiendo del tamaño del disco..." -ForegroundColor Yellow
+    Write-Host "Analizando unidad: $filesystem"
+    Write-Host "Esto puede tomar varios minutos dependiendo del tamaño del disco..."
     Write-Host ""
     
     try {
@@ -65,31 +65,25 @@ function Buscar-ArchivosGrandes {
                     Select-Object -First 10
         
         if ($archivos.Count -eq 0) {
-            Write-Host "No se encontraron archivos en la ruta especificada." -ForegroundColor Yellow
+            Write-Host "No se encontraron archivos en la ruta especificada."
         } else {
-            Write-Host ("{0,-50}  {1,20}  {2}" -f "Nombre del Archivo", "Tamaño (bytes)", "Ruta Completa") -ForegroundColor Yellow
-            Write-Host ("-" * 130) -ForegroundColor Gray
+            Write-Host ("{0,-50}  {1,20}  {2}" -f "Nombre del Archivo", "Tamaño (bytes)", "Ruta Completa")
+            Write-Host ("-" * 130)
             
             foreach ($archivo in $archivos) {
                 $nombre = $archivo.Name
                 $tamano = $archivo.Length
                 $ruta = $archivo.FullName
                 
-                # Determinar color según tamaño
-                $color = if ($tamano -gt 1GB) { "Red" }
-                        elseif ($tamano -gt 100MB) { "Yellow" }
-                        else { "White" }
-                
-                Write-Host ("{0,-50}  {1,20:N0}  " -f $nombre, $tamano) -NoNewline
-                Write-Host $ruta -ForegroundColor $color
+                Write-Host ("{0,-50}  {1,20:N0}  {2}" -f $nombre, $tamano, $ruta)
             }
             
             Write-Host ""
-            Write-Host "Total de archivos encontrados en top 10: $($archivos.Count)" -ForegroundColor Green
+            Write-Host "Total de archivos encontrados en top 10: $($archivos.Count)"
         }
         
     } catch {
-        Write-Host "Error al buscar archivos: $_" -ForegroundColor Red
+        Write-Host "Error al buscar archivos: $_"
     }
     
     Write-Host ""

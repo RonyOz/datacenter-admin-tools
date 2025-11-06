@@ -3,9 +3,9 @@
 
 function Mostrar-Memoria {
     Clear-Host
-    Write-Host "==========================================" -ForegroundColor Cyan
-    Write-Host "  INFORMACIÓN DE MEMORIA Y SWAP" -ForegroundColor Cyan
-    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "=========================================="
+    Write-Host "  INFORMACIÓN DE MEMORIA Y SWAP"
+    Write-Host "=========================================="
     Write-Host ""
     
     try {
@@ -16,17 +16,11 @@ function Mostrar-Memoria {
         $ramUsada = $totalRAM - $ramLibre
         $porcentajeRAM = [math]::Round(($ramUsada / $totalRAM) * 100, 2)
         
-        Write-Host "MEMORIA RAM:" -ForegroundColor Green
+        Write-Host "MEMORIA RAM:"
         Write-Host ("  Total:      {0,20:N0} bytes ({1:N2} GB)" -f $totalRAM, ($totalRAM / 1GB))
         Write-Host ("  En uso:     {0,20:N0} bytes ({1:N2} GB)" -f $ramUsada, ($ramUsada / 1GB))
         Write-Host ("  Libre:      {0,20:N0} bytes ({1:N2} GB)" -f $ramLibre, ($ramLibre / 1GB))
-        
-        # Color según porcentaje de uso
-        $colorRAM = if ($porcentajeRAM -gt 90) { "Red" }
-                    elseif ($porcentajeRAM -gt 75) { "Yellow" }
-                    else { "Green" }
-        Write-Host "  Porcentaje: " -NoNewline
-        Write-Host ("{0:N2}% usado" -f $porcentajeRAM) -ForegroundColor $colorRAM
+        Write-Host ("  Porcentaje: {0:N2}% usado" -f $porcentajeRAM)
         
         Write-Host ""
         
@@ -43,25 +37,19 @@ function Mostrar-Memoria {
                 0
             }
             
-            Write-Host "ARCHIVO DE PAGINACIÓN (Page File / Swap):" -ForegroundColor Green
+            Write-Host "ARCHIVO DE PAGINACIÓN (Page File / Swap):"
             Write-Host ("  Ubicación:  {0}" -f $pageFile.Name)
             Write-Host ("  Total:      {0,20:N0} bytes ({1:N2} GB)" -f $totalPageFile, ($totalPageFile / 1GB))
             Write-Host ("  En uso:     {0,20:N0} bytes ({1:N2} GB)" -f $usadoPageFile, ($usadoPageFile / 1GB))
             Write-Host ("  Libre:      {0,20:N0} bytes ({1:N2} GB)" -f $librePageFile, ($librePageFile / 1GB))
-            
-            # Color según porcentaje de uso
-            $colorPageFile = if ($porcentajePageFile -gt 90) { "Red" }
-                            elseif ($porcentajePageFile -gt 75) { "Yellow" }
-                            else { "Green" }
-            Write-Host "  Porcentaje: " -NoNewline
-            Write-Host ("{0:N2}% usado" -f $porcentajePageFile) -ForegroundColor $colorPageFile
+            Write-Host ("  Porcentaje: {0:N2}% usado" -f $porcentajePageFile)
         } else {
-            Write-Host "ARCHIVO DE PAGINACIÓN (Page File / Swap):" -ForegroundColor Green
-            Write-Host "  No se encontró archivo de paginación configurado." -ForegroundColor Yellow
+            Write-Host "ARCHIVO DE PAGINACIÓN (Page File / Swap):"
+            Write-Host "  No se encontró archivo de paginación configurado."
         }
         
     } catch {
-        Write-Host "Error al obtener información de memoria: $_" -ForegroundColor Red
+        Write-Host "Error al obtener información de memoria: $_"
     }
     
     Write-Host ""

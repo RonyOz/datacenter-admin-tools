@@ -10,10 +10,10 @@
 
 function Mostrar-Menu {
     Clear-Host
-    Write-Host "==========================================" -ForegroundColor Cyan
-    Write-Host "  HERRAMIENTAS DE ADMINISTRACIÓN" -ForegroundColor Cyan
-    Write-Host "  DATA CENTER - Versión PowerShell" -ForegroundColor Cyan
-    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "=========================================="
+    Write-Host "  HERRAMIENTAS DE ADMINISTRACIÓN"
+    Write-Host "  DATA CENTER - Versión PowerShell"
+    Write-Host "=========================================="
     Write-Host ""
     Write-Host "1. Usuarios y último login"
     Write-Host "2. Filesystems y espacio disponible"
@@ -46,18 +46,18 @@ do {
         }
         "6" {
             Write-Host ""
-            Write-Host "Saliendo del programa..." -ForegroundColor Yellow
+            Write-Host "Saliendo del programa..."
             break
         }
         default {
             Write-Host ""
-            Write-Host "Opción inválida." -ForegroundColor Red
+            Write-Host "Opción inválida."
         }
     }
     
     if ($opcion -ne "6") {
         Write-Host ""
-        Write-Host "Presione Enter para volver al menú..." -ForegroundColor Gray
+        Write-Host "Presione Enter para volver al menú..."
         Read-Host
     }
     

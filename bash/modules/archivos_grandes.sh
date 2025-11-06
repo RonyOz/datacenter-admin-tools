@@ -66,19 +66,7 @@ buscar_archivos_grandes() {
         sort -rn | \
         head -10 | \
         while IFS=$'\t' read -r size name path; do
-            # Determinar color según tamaño
-            local color=""
-            local reset="\033[0m"
-            
-            if [[ $size -gt 1073741824 ]]; then  # > 1 GB
-                color="\033[0;31m"  # Rojo
-            elif [[ $size -gt 104857600 ]]; then  # > 100 MB
-                color="\033[0;33m"  # Amarillo
-            else
-                color="\033[0m"  # Normal
-            fi
-            
-            printf "%-50s %20s  ${color}%s${reset}\n" "${name:0:50}" "$size" "$path"
+            printf "%-50s %20s  %s\n" "${name:0:50}" "$size" "$path"
         done
     
     echo ""

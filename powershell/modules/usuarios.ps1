@@ -3,17 +3,17 @@
 
 function Listar-Usuarios {
     Clear-Host
-    Write-Host "==========================================" -ForegroundColor Cyan
-    Write-Host "  USUARIOS Y ÚLTIMO LOGIN" -ForegroundColor Cyan
-    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "=========================================="
+    Write-Host "  USUARIOS Y ÚLTIMO LOGIN"
+    Write-Host "=========================================="
     Write-Host ""
     
     try {
         # Obtener usuarios locales del sistema
         $usuarios = Get-LocalUser | Sort-Object Name
         
-        Write-Host ("{0,-25} {1,-30} {2}" -f "Usuario", "Último Login", "Estado") -ForegroundColor Yellow
-        Write-Host ("-" * 75) -ForegroundColor Gray
+        Write-Host ("{0,-25} {1,-30} {2}" -f "Usuario", "Último Login", "Estado")
+        Write-Host ("-" * 75)
         
         foreach ($usuario in $usuarios) {
             $nombre = $usuario.Name
@@ -24,16 +24,15 @@ function Listar-Usuarios {
             }
             $estado = if ($usuario.Enabled) { "Activo" } else { "Deshabilitado" }
             
-            $color = if ($usuario.Enabled) { "White" } else { "DarkGray" }
-            Write-Host ("{0,-25} {1,-30} {2}" -f $nombre, $ultimoLogin, $estado) -ForegroundColor $color
+            Write-Host ("{0,-25} {1,-30} {2}" -f $nombre, $ultimoLogin, $estado)
         }
         
         Write-Host ""
-        Write-Host "Total de usuarios: $($usuarios.Count)" -ForegroundColor Green
+        Write-Host "Total de usuarios: $($usuarios.Count)"
         
     } catch {
-        Write-Host "Error al obtener información de usuarios: $_" -ForegroundColor Red
-        Write-Host "Nota: Se requieren permisos de administrador para ver todos los usuarios." -ForegroundColor Yellow
+        Write-Host "Error al obtener información de usuarios: $_"
+        Write-Host "Nota: Se requieren permisos de administrador para ver todos los usuarios."
     }
     
     Write-Host ""

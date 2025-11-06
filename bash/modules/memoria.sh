@@ -10,57 +10,41 @@ mostrar_memoria() {
     echo "=========================================="
     echo ""
     
-    # Leer información de /proc/meminfo
+    # Verificar acceso a /proc/meminfo
     if [[ ! -f /proc/meminfo ]]; then
         echo "Error: No se puede acceder a /proc/meminfo"
         echo ""
         return
     fi
     
-    # Obtener valores de memoria en KB y convertir a bytes
+    # Obtener valores de memoria en KB
     local mem_total=$(grep MemTotal /proc/meminfo | awk '{print $2}')
-    local mem_free=$(grep MemFree /proc/meminfo | awk '{print $2}')
     local mem_available=$(grep MemAvailable /proc/meminfo | awk '{print $2}')
-    local buffers=$(grep Buffers /proc/meminfo | awk '{print $2}')
-    local cached=$(grep "^Cached:" /proc/meminfo | awk '{print $2}')
     
-    # Convertir a bytes (multiplicar por 1024)
+    # Convertir a bytes
     mem_total=$((mem_total * 1024))
-    mem_free=$((mem_free * 1024))
     mem_available=$((mem_available * 1024))
-    buffers=$((buffers * 1024))
-    cached=$((cached * 1024))
     
     # Calcular memoria usada
     local mem_used=$((mem_total - mem_available))
     
-    # Calcular porcentaje
+    # Calcular porcentaje de memoria usada
     local mem_percent=0
     if [[ $mem_total -gt 0 ]]; then
         mem_percent=$(echo "scale=2; ($mem_used * 100) / $mem_total" | bc)
     fi
     
-    # Convertir a GB para mejor legibilidad
+    # Convertir a GB
     local mem_total_gb=$(echo "scale=2; $mem_total / (1024*1024*1024)" | bc)
     local mem_used_gb=$(echo "scale=2; $mem_used / (1024*1024*1024)" | bc)
     local mem_available_gb=$(echo "scale=2; $mem_available / (1024*1024*1024)" | bc)
     
-    # Determinar color según porcentaje
-    local color=""
-    local reset="\033[0m"
-    if (( $(echo "$mem_percent > 90" | bc -l) )); then
-        color="\033[0;31m"  # Rojo
-    elif (( $(echo "$mem_percent > 75" | bc -l) )); then
-        color="\033[0;33m"  # Amarillo
-    else
-        color="\033[0;32m"  # Verde
-    fi
-    
+    # Mostrar información de memoria RAM
     echo "MEMORIA RAM:"
     printf "  Total:      %20s bytes (%s GB)\n" "$mem_total" "$mem_total_gb"
     printf "  En uso:     %20s bytes (%s GB)\n" "$mem_used" "$mem_used_gb"
     printf "  Disponible: %20s bytes (%s GB)\n" "$mem_available" "$mem_available_gb"
-    echo -e "  Porcentaje: ${color}${mem_percent}% usado${reset}"
+    printf "  Porcentaje: %s%% usado\n" "$mem_percent"
     echo ""
     
     # Obtener información de SWAP
@@ -85,26 +69,15 @@ mostrar_memoria() {
     local swap_used_gb=$(echo "scale=2; $swap_used / (1024*1024*1024)" | bc)
     local swap_free_gb=$(echo "scale=2; $swap_free / (1024*1024*1024)" | bc)
     
-    # Determinar color según porcentaje de swap
-    local swap_color=""
-    if [[ $swap_total -eq 0 ]]; then
-        swap_color="\033[0;33m"  # Amarillo si no hay swap
-    elif (( $(echo "$swap_percent > 90" | bc -l) )); then
-        swap_color="\033[0;31m"  # Rojo
-    elif (( $(echo "$swap_percent > 75" | bc -l) )); then
-        swap_color="\033[0;33m"  # Amarillo
-    else
-        swap_color="\033[0;32m"  # Verde
-    fi
-    
+    # Mostrar información de SWAP
     echo "MEMORIA SWAP:"
     if [[ $swap_total -eq 0 ]]; then
-        echo -e "  ${swap_color}No hay memoria swap configurada${reset}"
+        echo "  No hay memoria swap configurada"
     else
         printf "  Total:      %20s bytes (%s GB)\n" "$swap_total" "$swap_total_gb"
         printf "  En uso:     %20s bytes (%s GB)\n" "$swap_used" "$swap_used_gb"
         printf "  Libre:      %20s bytes (%s GB)\n" "$swap_free" "$swap_free_gb"
-        echo -e "  Porcentaje: ${swap_color}${swap_percent}% usado${reset}"
+        printf "  Porcentaje: %s%% usado\n" "$swap_percent"
     fi
     echo ""
 }

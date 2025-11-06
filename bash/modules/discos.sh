@@ -24,19 +24,8 @@ listar_discos() {
         # Calcular porcentaje (quitar el símbolo %)
         local uso_pct="${capacity%\%}"
         
-        # Determinar color según porcentaje (solo visual en terminal)
-        local color=""
-        if [[ $uso_pct -gt 90 ]]; then
-            color="\033[0;31m"  # Rojo
-        elif [[ $uso_pct -gt 75 ]]; then
-            color="\033[0;33m"  # Amarillo
-        else
-            color="\033[0;32m"  # Verde
-        fi
-        local reset="\033[0m"
-        
         # Formatear salida
-        printf "%-25s %20s %20s %20s ${color}%9s%%${reset}\n" \
+        printf "%-25s %20s %20s %20s %9s%%\n" \
             "$filesystem" "$blocks" "$used" "$available" "$uso_pct"
         
         ((contador++))
