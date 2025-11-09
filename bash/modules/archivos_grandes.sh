@@ -26,7 +26,11 @@ buscar_archivos_grandes() {
             local size_gb=$(echo "scale=2; $size / (1024*1024*1024)" | bc 2>/dev/null || echo "0")
             local avail_gb=$(echo "scale=2; $avail / (1024*1024*1024)" | bc 2>/dev/null || echo "0")
             
-            printf "  %d. %-20s (Total: %10.2f GB, Libre: %10.2f GB)\n" "$index" "$mounted" "$size_gb" "$avail_gb"
+            # Reemplazar punto por coma para compatibilidad con locale
+            size_gb="${size_gb/./,}"
+            avail_gb="${avail_gb/./,}"
+            
+            printf "  %d. %-20s (Total: %10s GB, Libre: %10s GB)\n" "$index" "$mounted" "$size_gb" "$avail_gb"
             ((index++))
         fi
     done < <(df -B1 -x tmpfs -x devtmpfs -x squashfs 2>/dev/null | tail -n +2)
