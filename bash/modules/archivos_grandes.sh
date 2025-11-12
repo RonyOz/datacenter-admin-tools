@@ -1,17 +1,14 @@
 #!/bin/bash
 
-# Módulo: Búsqueda de Archivos
-# Función: Encontrar los 10 archivos más grandes en un filesystem
-
 buscar_archivos_grandes() {
     clear
-    echo "=========================================="
-    echo "  ARCHIVOS MÁS GRANDES"
-    echo "=========================================="
+    echo ""
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}  ARCHIVOS MÁS GRANDES${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
     echo ""
     
-    # Mostrar menú de filesystems disponibles
-    echo "Filesystems disponibles:"
+    echo -e "${COLOR_VERDE}Filesystems disponibles:${COLOR_RESET}"
     echo ""
     
     local -a filesystems
@@ -35,21 +32,19 @@ buscar_archivos_grandes() {
         fi
     done < <(df -B1 -x tmpfs -x devtmpfs -x squashfs 2>/dev/null | tail -n +2)
     
-    # Si no hay filesystems, salir
     if [[ ${#filesystems[@]} -eq 0 ]]; then
-        echo "No se encontraron filesystems disponibles."
+        echo -e "${COLOR_ROJO}No se encontraron filesystems disponibles.${COLOR_RESET}"
         echo ""
         return
     fi
     
     echo ""
-    echo -n "Seleccione el número del filesystem a analizar: "
+    echo -e -n "${COLOR_AMARILLO}Seleccione el número del filesystem a analizar: ${COLOR_RESET}"
     read seleccion
     
-    # Validar selección
     if [[ ! "$seleccion" =~ ^[0-9]+$ ]] || [[ $seleccion -lt 1 ]] || [[ $seleccion -ge $index ]]; then
         echo ""
-        echo "Error: Selección inválida."
+        echo -e "${COLOR_ROJO}Error: Selección inválida.${COLOR_RESET}"
         echo ""
         return
     fi
@@ -57,13 +52,12 @@ buscar_archivos_grandes() {
     local filesystem="${filesystems[$seleccion]}"
     
     echo ""
-    echo "Analizando filesystem: $filesystem"
-    echo "Esto puede tomar varios minutos dependiendo del tamaño..."
+    echo -e "${COLOR_VERDE}Analizando filesystem: $filesystem${COLOR_RESET}"
+    echo -e "${COLOR_AMARILLO}Esto puede tomar varios minutos dependiendo del tamaño...${COLOR_RESET}"
     echo ""
     
-    # Buscar los 10 archivos más grandes
-    printf "%-50s %20s  %s\n" "Nombre del Archivo" "Tamaño (bytes)" "Ruta Completa"
-    echo "--------------------------------------------------------------------------------------------------------"
+    printf "${COLOR_VERDE}%-50s %20s  %s${COLOR_RESET}\n" "Nombre del Archivo" "Tamaño (bytes)" "Ruta Completa"
+    echo -e "${COLOR_GRIS}--------------------------------------------------------------------------------------------------------${COLOR_RESET}"
     
     # Usar find para buscar archivos y ordenar por tamaño
     find "$filesystem" -type f -printf "%s\t%f\t%p\n" 2>/dev/null | \
@@ -74,6 +68,6 @@ buscar_archivos_grandes() {
         done
     
     echo ""
-    echo "Búsqueda completada."
+    echo -e "${COLOR_VERDE}Búsqueda completada.${COLOR_RESET}"
     echo ""
 }

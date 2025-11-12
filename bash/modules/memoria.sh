@@ -1,18 +1,15 @@
 #!/bin/bash
 
-# Módulo: Monitoreo de Memoria
-# Función: Mostrar memoria libre y swap en uso (bytes y porcentaje)
-
 mostrar_memoria() {
     clear
-    echo "=========================================="
-    echo "  INFORMACIÓN DE MEMORIA Y SWAP"
-    echo "=========================================="
+    echo ""
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}  INFORMACIÓN DE MEMORIA Y SWAP${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
     echo ""
     
-    # Verificar acceso a /proc/meminfo
     if [[ ! -f /proc/meminfo ]]; then
-        echo "Error: No se puede acceder a /proc/meminfo"
+        echo -e "${COLOR_ROJO}Error: No se puede acceder a /proc/meminfo${COLOR_RESET}"
         echo ""
         return
     fi
@@ -39,12 +36,11 @@ mostrar_memoria() {
     local mem_used_gb=$(echo "scale=2; $mem_used / (1024*1024*1024)" | bc)
     local mem_available_gb=$(echo "scale=2; $mem_available / (1024*1024*1024)" | bc)
     
-    # Mostrar información de memoria RAM
-    echo "MEMORIA RAM:"
+    echo -e "${COLOR_VERDE}MEMORIA RAM:${COLOR_RESET}"
     printf "  Total:      %20s bytes (%s GB)\n" "$mem_total" "$mem_total_gb"
     printf "  En uso:     %20s bytes (%s GB)\n" "$mem_used" "$mem_used_gb"
     printf "  Disponible: %20s bytes (%s GB)\n" "$mem_available" "$mem_available_gb"
-    printf "  Porcentaje: %s%% usado\n" "$mem_percent"
+    printf "  Porcentaje: ${COLOR_AMARILLO}%s%% usado${COLOR_RESET}\n" "$mem_percent"
     echo ""
     
     # Obtener información de SWAP
@@ -69,15 +65,14 @@ mostrar_memoria() {
     local swap_used_gb=$(echo "scale=2; $swap_used / (1024*1024*1024)" | bc)
     local swap_free_gb=$(echo "scale=2; $swap_free / (1024*1024*1024)" | bc)
     
-    # Mostrar información de SWAP
-    echo "MEMORIA SWAP:"
+    echo -e "${COLOR_VERDE}MEMORIA SWAP:${COLOR_RESET}"
     if [[ $swap_total -eq 0 ]]; then
-        echo "  No hay memoria swap configurada"
+        echo -e "  ${COLOR_AMARILLO}No hay memoria swap configurada${COLOR_RESET}"
     else
         printf "  Total:      %20s bytes (%s GB)\n" "$swap_total" "$swap_total_gb"
         printf "  En uso:     %20s bytes (%s GB)\n" "$swap_used" "$swap_used_gb"
         printf "  Libre:      %20s bytes (%s GB)\n" "$swap_free" "$swap_free_gb"
-        printf "  Porcentaje: %s%% usado\n" "$swap_percent"
+        printf "  Porcentaje: ${COLOR_AMARILLO}%s%% usado${COLOR_RESET}\n" "$swap_percent"
     fi
     echo ""
 }

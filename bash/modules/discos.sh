@@ -1,18 +1,15 @@
 #!/bin/bash
 
-# Módulo: Gestión de Discos
-# Función: Listar filesystems, tamaño y espacio libre en bytes
-
 listar_discos() {
     clear
-    echo "=========================================="
-    echo "  FILESYSTEMS Y ESPACIO DISPONIBLE"
-    echo "=========================================="
+    echo ""
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}  FILESYSTEMS Y ESPACIO DISPONIBLE${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
     echo ""
     
-    # Encabezado de la tabla
-    printf "%-25s %20s %20s %20s %10s\n" "Filesystem" "Tamaño (bytes)" "Usado (bytes)" "Libre (bytes)" "Uso %"
-    echo "--------------------------------------------------------------------------------------------------------"
+    printf "${COLOR_VERDE}%-25s %20s %20s %20s %10s${COLOR_RESET}\n" "Filesystem" "Tamaño (bytes)" "Usado (bytes)" "Libre (bytes)" "Uso %"
+    echo -e "${COLOR_GRIS}--------------------------------------------------------------------------------------------------------${COLOR_RESET}"
     
     # Usar df para obtener información de filesystems
     # -B1 para obtener valores en bytes
@@ -32,6 +29,6 @@ listar_discos() {
     done <<< "$output"
     
     echo ""
-    echo "Total de filesystems: $contador"
+    echo -e "${COLOR_AMARILLO}Total de filesystems: $contador${COLOR_RESET}"
     echo ""
 }

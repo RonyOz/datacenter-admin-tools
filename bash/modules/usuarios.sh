@@ -1,18 +1,15 @@
 #!/bin/bash
 
-# Módulo: Gestión de Usuarios
-# Función: Desplegar usuarios y fecha/hora de último login
-
 listar_usuarios() {
     clear
-    echo "=========================================="
-    echo "  USUARIOS Y ÚLTIMO LOGIN"
-    echo "=========================================="
+    echo ""
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}  USUARIOS Y ÚLTIMO LOGIN${COLOR_RESET}"
+    echo -e "${COLOR_CYAN}==========================================${COLOR_RESET}"
     echo ""
     
-    # Encabezado de la tabla
-    printf "%-20s %-30s %-15s\n" "Usuario" "Último Login" "Estado"
-    echo "-----------------------------------------------------------------------"
+    printf "${COLOR_VERDE}%-20s %-30s %-15s${COLOR_RESET}\n" "Usuario" "Último Login" "Estado"
+    echo -e "${COLOR_GRIS}-----------------------------------------------------------------------${COLOR_RESET}"
     
     # Obtener lista de usuarios del sistema con UID >= 1000 (usuarios normales)
     # y también incluir root (UID 0)
@@ -47,6 +44,6 @@ listar_usuarios() {
     done < /etc/passwd
     
     echo ""
-    echo "Total de usuarios: $contador"
+    echo -e "${COLOR_AMARILLO}Total de usuarios: $contador${COLOR_RESET}"
     echo ""
 }
