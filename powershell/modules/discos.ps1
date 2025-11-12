@@ -1,19 +1,16 @@
-# Módulo: Gestión de Discos
-# Función: Listar filesystems, tamaño y espacio libre en bytes
-
 function Listar-Discos {
     Clear-Host
-    Write-Host "=========================================="
-    Write-Host "  FILESYSTEMS Y ESPACIO DISPONIBLE"
-    Write-Host "=========================================="
+    Write-Host ""
+    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "  FILESYSTEMS Y ESPACIO DISPONIBLE" -ForegroundColor Cyan
+    Write-Host "==========================================" -ForegroundColor Cyan
     Write-Host ""
     
     try {
-        # Obtener información de discos locales
         $discos = Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Used -ne $null }
         
-        Write-Host ("{0,-10} {1,20} {2,20} {3,20} {4,10}" -f "Unidad", "Tamaño (bytes)", "Usado (bytes)", "Libre (bytes)", "Uso %")
-        Write-Host ("-" * 85)
+        Write-Host ("{0,-10} {1,20} {2,20} {3,20} {4,10}" -f "Unidad", "Tamaño (bytes)", "Usado (bytes)", "Libre (bytes)", "Uso %") -ForegroundColor Green
+        Write-Host ("-" * 85) -ForegroundColor Gray
         
         foreach ($disco in $discos) {
             $nombre = $disco.Name + ":\"
@@ -30,10 +27,10 @@ function Listar-Discos {
         }
         
         Write-Host ""
-        Write-Host "Total de unidades: $($discos.Count)"
+        Write-Host "Total de unidades: $($discos.Count)" -ForegroundColor Yellow
         
     } catch {
-        Write-Host "Error al obtener información de discos: $_"
+        Write-Host "Error al obtener información de discos: $_" -ForegroundColor Red
     }
     
     Write-Host ""

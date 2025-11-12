@@ -1,7 +1,3 @@
-# Herramienta de Administración para Data Center
-# Menu Principal - PowerShell
-
-# Importar módulos
 . .\modules\usuarios.ps1
 . .\modules\discos.ps1
 . .\modules\archivos_grandes.ps1
@@ -10,23 +6,30 @@
 
 function Mostrar-Menu {
     Clear-Host
-    Write-Host "=========================================="
-    Write-Host "  HERRAMIENTAS DE ADMINISTRACIÓN"
-    Write-Host "  DATA CENTER - Versión PowerShell"
-    Write-Host "=========================================="
     Write-Host ""
-    Write-Host "1. Usuarios y último login"
-    Write-Host "2. Filesystems y espacio disponible"
-    Write-Host "3. Archivos más grandes en un disco"
-    Write-Host "4. Información de memoria y swap"
-    Write-Host "5. Backup de directorio a USB"
-    Write-Host "6. Salir"
+    Write-Host " /0000000   /000000        /000000        /00               /00           " -ForegroundColor Cyan
+    Write-Host "| 00__  00 /00__  00      /00__  00      | 00              |__/           " -ForegroundColor Cyan
+    Write-Host "| 00  \ 00| 00  \__/     | 00  \ 00  /0000000 /000000/0000  /00 /0000000  " -ForegroundColor Cyan
+    Write-Host "| 00  | 00| 00           | 00000000 /00__  00| 00_  00_  00| 00| 00__  00 " -ForegroundColor Cyan
+    Write-Host "| 00  | 00| 00           | 00__  00| 00  | 00| 00 \ 00 \ 00| 00| 00  \ 00 " -ForegroundColor Cyan
+    Write-Host "| 00  | 00| 00    00     | 00  | 00| 00  | 00| 00 | 00 | 00| 00| 00  | 00 " -ForegroundColor Cyan
+    Write-Host "| 0000000/|  000000/     | 00  | 00|  0000000| 00 | 00 | 00| 00| 00  | 00 " -ForegroundColor Cyan
+    Write-Host "|_______/  \______/      |__/  |__/ \_______/|__/ |__/ |__/|__/|__/  |__/  .ps1"
+    Write-Host ""
+    Write-Host "[1] Usuarios y último login" -ForegroundColor Green
+    Write-Host "[2] Filesystems y espacio disponible" -ForegroundColor Green
+    Write-Host "[3] Archivos más grandes en un disco" -ForegroundColor Green
+    Write-Host "[4] Información de memoria y swap" -ForegroundColor Green
+    Write-Host "[5] Backup de directorio a USB" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "[6] Salir" -ForegroundColor Red
     Write-Host ""
 }
 
 do {
     Mostrar-Menu
-    $opcion = Read-Host "Seleccione una opción"
+    Write-Host "> " -ForegroundColor Yellow -NoNewline
+    $opcion = Read-Host
     
     switch ($opcion) {
         "1" {
@@ -46,18 +49,18 @@ do {
         }
         "6" {
             Write-Host ""
-            Write-Host "Saliendo del programa..."
+            Write-Host "Saliendo del programa..." -ForegroundColor Yellow
             break
         }
         default {
             Write-Host ""
-            Write-Host "Opción inválida."
+            Write-Host "Opción inválida." -ForegroundColor Red
         }
     }
     
     if ($opcion -ne "6") {
         Write-Host ""
-        Write-Host "Presione Enter para volver al menú..."
+        Write-Host "Presione Enter para volver al menú..." -ForegroundColor Gray
         Read-Host
     }
     

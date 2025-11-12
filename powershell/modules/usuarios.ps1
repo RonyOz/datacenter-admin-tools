@@ -1,11 +1,9 @@
-# Módulo: Gestión de Usuarios
-# Función: Desplegar usuarios y fecha/hora de último login
-
 function Listar-Usuarios {
     Clear-Host
-    Write-Host "=========================================="
-    Write-Host "  USUARIOS Y ÚLTIMO LOGIN"
-    Write-Host "=========================================="
+    Write-Host ""
+    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "  USUARIOS Y ÚLTIMO LOGIN" -ForegroundColor Cyan
+    Write-Host "==========================================" -ForegroundColor Cyan
     Write-Host ""
     
     try {
@@ -44,8 +42,8 @@ function Listar-Usuarios {
             # Si no hay permisos o no hay eventos, continuar
         }
         
-        Write-Host ("{0,-25} {1,-30} {2}" -f "Usuario", "Último Login", "Estado")
-        Write-Host ("-" * 75)
+        Write-Host ("{0,-25} {1,-30} {2}" -f "Usuario", "Último Login", "Estado") -ForegroundColor Green
+        Write-Host ("-" * 75) -ForegroundColor Gray
         
         foreach ($usuario in $usuarios) {
             $nombre = $usuario.Name
@@ -81,9 +79,8 @@ function Listar-Usuarios {
         }
         
         Write-Host ""
-        Write-Host "Total de usuarios: $($usuarios.Count)"
+        Write-Host "Total de usuarios: $($usuarios.Count)" -ForegroundColor Yellow
         
-        # Mostrar nota sobre sesiones activas
         $cantidadActivos = $sesionesActivas.Count
         if ($cantidadActivos -gt 0) {
             Write-Host ""
@@ -92,7 +89,7 @@ function Listar-Usuarios {
         
     } catch {
         Write-Host "Error al obtener información de usuarios: $_" -ForegroundColor Red
-        Write-Host "Nota: Se requieren permisos de administrador para ver toda la información."
+        Write-Host "Nota: Se requieren permisos de administrador para ver toda la información." -ForegroundColor Yellow
     }
     
     Write-Host ""

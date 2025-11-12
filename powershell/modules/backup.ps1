@@ -1,15 +1,13 @@
-# Módulo: Sistema de Backup
-# Función: Realizar backup de directorio a USB con catálogo de archivos
-
 function Realizar-Backup {
     Clear-Host
-    Write-Host "=========================================="
-    Write-Host "  BACKUP DE DIRECTORIO A USB"
-    Write-Host "=========================================="
+    Write-Host ""
+    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "  BACKUP DE DIRECTORIO A USB" -ForegroundColor Cyan
+    Write-Host "==========================================" -ForegroundColor Cyan
     Write-Host ""
     
-    # Solicitar directorio origen
-    $directorioOrigen = Read-Host "Ingrese el directorio a respaldar"
+    Write-Host "Ingrese el directorio a respaldar: " -ForegroundColor Yellow -NoNewline
+    $directorioOrigen = Read-Host
     
     # Validar que el directorio origen existe
     if (-not (Test-Path -Path $directorioOrigen -PathType Container)) {
@@ -20,8 +18,8 @@ function Realizar-Backup {
         return
     }
     
-    # Solicitar directorio destino (USB)
-    $directorioDestino = Read-Host "Ingrese la ruta del USB (ej: E:\Backup)"
+    Write-Host "Ingrese la ruta del USB (ej: E:\Backup): " -ForegroundColor Yellow -NoNewline
+    $directorioDestino = Read-Host
     
     # Validar que el directorio destino existe
     if (-not (Test-Path -Path $directorioDestino -PathType Container)) {
@@ -47,7 +45,7 @@ function Realizar-Backup {
     }
     
     Write-Host ""
-    Write-Host "Preparando backup..."
+    Write-Host "Preparando backup..." -ForegroundColor Green
     Write-Host "  Origen:  $directorioOrigen"
     Write-Host "  Destino: $directorioDestino"
     Write-Host ""
@@ -67,13 +65,12 @@ function Realizar-Backup {
         return
     }
     
-    Write-Host "Directorio de backup: $nombreBackup"
+    Write-Host "Directorio de backup: $nombreBackup" -ForegroundColor Yellow
     Write-Host ""
     
-    # Contar archivos a respaldar
     $archivos = Get-ChildItem -Path $directorioOrigen -File -Recurse -ErrorAction SilentlyContinue
     $totalArchivos = $archivos.Count
-    Write-Host "Total de archivos a respaldar: $totalArchivos"
+    Write-Host "Total de archivos a respaldar: $totalArchivos" -ForegroundColor Green
     Write-Host ""
     
     # Mostrar algunos archivos de ejemplo
@@ -86,12 +83,12 @@ function Realizar-Backup {
     }
     Write-Host ""
     
-    # Confirmación del usuario
-    $confirmacion = Read-Host "¿Desea continuar con el backup? (s/n)"
+    Write-Host "¿Desea continuar con el backup? (s/n): " -ForegroundColor Yellow -NoNewline
+    $confirmacion = Read-Host
     
     if ($confirmacion -notmatch "^[sS]$") {
         Write-Host ""
-        Write-Host "Backup cancelado por el usuario." -ForegroundColor Yellow
+        Write-Host "Backup cancelado por el usuario." -ForegroundColor Red
         Remove-Item -Path $rutaBackup -Force -Recurse -ErrorAction SilentlyContinue
         Write-Host ""
         Read-Host "Presione ENTER para continuar"
@@ -99,7 +96,7 @@ function Realizar-Backup {
     }
     
     Write-Host ""
-    Write-Host "Generando catálogo de archivos..."
+    Write-Host "Generando catálogo de archivos..." -ForegroundColor Green
     
     # Crear archivo de catálogo
     $catalogo = Join-Path $rutaBackup "catalogo.txt"
@@ -145,9 +142,9 @@ ARCHIVO | FECHA DE MODIFICACIÓN | TAMAÑO
         Add-Content -Path $catalogo -Value "$rutaRelativa | $fechaModificacion | $tamanioHuman" -Encoding UTF8
     }
     
-    Write-Host "Catálogo generado: $nombreBackup\catalogo.txt"
+    Write-Host "Catálogo generado: $nombreBackup\catalogo.txt" -ForegroundColor Green
     Write-Host ""
-    Write-Host "Comprimiendo archivos con Compress-Archive..."
+    Write-Host "Comprimiendo archivos con Compress-Archive..." -ForegroundColor Yellow
     Write-Host ""
     
     # Nombre del archivo ZIP comprimido
@@ -167,11 +164,11 @@ ARCHIVO | FECHA DE MODIFICACIÓN | TAMAÑO
     }
     
     Write-Host ""
-    Write-Host "=========================================="
-    Write-Host "BACKUP COMPLETADO EXITOSAMENTE"
-    Write-Host "=========================================="
+    Write-Host "==========================================" -ForegroundColor Cyan
+    Write-Host "BACKUP COMPLETADO EXITOSAMENTE" -ForegroundColor Cyan
+    Write-Host "==========================================" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "Resumen:"
+    Write-Host "Resumen:" -ForegroundColor Green
     Write-Host "  • Ubicación: $rutaBackup"
     Write-Host "  • Archivo comprimido: $nombreBackup.zip"
     Write-Host "  • Total de archivos: $totalArchivos"
@@ -210,19 +207,18 @@ ARCHIVO | FECHA DE MODIFICACIÓN | TAMAÑO
         
         Write-Host "  • Tamaño original: $tamanioOriginalHuman"
         Write-Host "  • Tamaño comprimido: $tamanioBackupHuman"
-        Write-Host "  • Compresión: $porcentajeCompresion%" -ForegroundColor Cyan
+        Write-Host "  • Compresión: $porcentajeCompresion%" -ForegroundColor Yellow
     }
     Write-Host ""
     
-    # Mostrar ubicación del catálogo y backup
     Write-Host "El catálogo se encuentra en:"
     Write-Host "   $catalogo" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "El backup comprimido se encuentra en:"
     Write-Host "   $archivoZip" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "Para restaurar el backup, use:"
-    Write-Host "   Expand-Archive -Path '$archivoZip' -DestinationPath 'C:\Ruta\Destino\'" -ForegroundColor Cyan
+    Write-Host "Para restaurar el backup, use:" -ForegroundColor Green
+    Write-Host "   Expand-Archive -Path '$archivoZip' -DestinationPath 'C:\Ruta\Destino\'" -ForegroundColor Yellow
     Write-Host ""
     
     Read-Host "Presione ENTER para continuar"
