@@ -6,7 +6,11 @@ function Buscar-ArchivosGrandes {
     Write-Host "==========================================" -ForegroundColor Cyan
     Write-Host ""
     
-    $unidades = Get-PSDrive -PSProvider FileSystem | Where-Object { $null -ne $_.Used }
+    $unidades = Get-PSDrive -PSProvider FileSystem | Where-Object { 
+        $null -ne $_.Used -and 
+        $_.Name.Length -eq 1 -and 
+        $_.Name -match '^[A-Z]$'
+    }
     
     if ($unidades.Count -eq 0) {
         Write-Host "No se encontraron unidades disponibles." -ForegroundColor Red

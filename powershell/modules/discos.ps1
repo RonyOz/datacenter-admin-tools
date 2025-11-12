@@ -7,7 +7,11 @@ function Listar-Discos {
     Write-Host ""
     
     try {
-        $discos = Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Used -ne $null }
+        $discos = Get-PSDrive -PSProvider FileSystem | Where-Object { 
+            $_.Used -ne $null -and 
+            $_.Name.Length -eq 1 -and 
+            $_.Name -match '^[A-Z]$'
+        }
         
         Write-Host ("{0,-10} {1,20} {2,20} {3,20} {4,10}" -f "Unidad", "Tamaño (bytes)", "Usado (bytes)", "Libre (bytes)", "Uso %") -ForegroundColor Green
         Write-Host ("-" * 85) -ForegroundColor Gray
